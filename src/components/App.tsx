@@ -1,39 +1,64 @@
-// import ListGroup from "./ListGroup";
- import Alert from "./Alert";
-
-import Button from "./Button";
 import { useState } from "react";
 
 function App() {
-  // const items = ["Oslo", "Berlin", "Kosice", "Bratislava"];
+  const [tags, setTags] = useState(["happy", "sad", "exciting"]);
 
-  // const handleSelectItem = (item: string) => {
-  //   console.log(item);
-  // }
+  const [drink, setDrink] = useState({
+    title: "Americano",
+    price: 5,
+  });
 
-  const [alertVisible, setAlertVisibility] = useState(false);
+  const [customer, setCustomer] = useState({
+    name: "John",
+    address: {
+      street: "Main",
+      zipCode: "07205",
+    },
+  });
 
-  // const handleOnClick = () => {
-  //   console.log("clicked");
-  // };
+  const [bugs, setBugs] = useState([
+    { id: 1, title: "Bug 1", fixed: false },
+    { id: 2, title: "Bug 2", fixed: false },
+  ]);
 
+  const [game, setGame] = useState({
+    id: 1,
+    player: {
+      name: "John",
+    },
+  });
+
+  const [pizza, setPizza] = useState({
+    name: "Spicy Pepperoni",
+    toppings: ["Mushroom"],
+  });
+
+  const [cart, setCart] = useState({
+    discount: 0.1,
+    items: [
+      { id: 1, title: "Product 1", quantity: 1 },
+      { id: 2, title: "Product 2", quantity: 1 },
+    ],
+  });
+
+  const handleClick = () => {
+    setDrink({ ...drink, price: 6 });
+    setCustomer({
+      ...customer,
+      address: { ...customer.address, zipCode: "82103" },
+    });
+    setTags([...tags, "generous"]);
+    setBugs(bugs.map((bug) => (bug.id === 1 ? { ...bug, fixed: true } : bug)));
+    setGame({ ...game, player: { ...game.player, name: "Bob" } });
+    setPizza({ ...pizza, toppings: [...pizza.toppings, "ketchup"] });
+    setCart({...cart, items: cart.items.map(item => item.id === 1 ? {...item, quantity: 2} : item)})
+  };
+
+  console.log(cart);
 
   return (
     <>
-      <div className="flex items-center text-gray-200 flex-col justify-center">
-        <h1 className="text-9xl font-bold underline">Hello world!</h1>
-        <div className="mt-24">
-          { alertVisible && <Alert onClose={() => setAlertVisibility(false)}>My alert</Alert>}
-          <Button onClick={() => setAlertVisibility(true)} color="primary">
-            {/* <Button onClick={() => console.log("clicked")} color="red"> */}
-            My button
-          </Button>
-          {/* <Alert>
-            Hello World <span className="text-purple-600">It's me</span>
-          </Alert> */}
-          {/* <ListGroup items={items} heading="Cities" onSelectItem={handleSelectItem} /> */}
-        </div>
-      </div>
+      {drink.price} <button onClick={handleClick}>Click me</button>
     </>
   );
 }
